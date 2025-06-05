@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Chooser</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1>🎬 Pick Your Favorite Anime Theme</h1>
+      <p>Choose a theme to get the perfect anime match</p>
+      <div class="mood-grid">
+        <div class="card Adventure" onclick="selectTheme('Adventure')">
+          <span>🌍</span>
+          <p>Adventure</p>
+        </div>
+        <div class="card Fantasy" onclick="selectTheme('Fantasy')">
+          <span>🧙‍♂️</span>
+          <p>Fantasy</p>
+        </div>
+        <div class="card Action" onclick="selectTheme('Action')">
+          <span>💥</span>
+          <p>Action</p>
+        </div>
+        <div class="card Music" onclick="selectTheme('Music')">
+          <span>🎵</span>
+          <p>Music</p>
+        </div>
+        <div class="card Romance" onclick="selectTheme('Romance')">
+          <span>❤️</span>
+          <p>Romance</p>
+        </div>
+        <div class="card Sports" onclick="selectTheme('Sports')">
+          <span>🏀</span>
+          <p>Sports</p>
+        </div>
+        <div class="card Comedy" onclick="selectTheme('Comedy')">
+          <span>😂</span>
+          <p>Comedy</p>
+        </div>
+        <div class="card Mystery" onclick="selectTheme('Mystery')">
+          <span>🕵️‍♂️</span>
+          <p>Mystery</p>
+        </div>
+        <div class="card Sci-Fi" onclick="selectTheme('Sci-Fi')">
+          <span>🚀</span>
+          <p>Sci-Fi</p>
+      </div>
+    </div><br><br>
+    <button id="view-watch-later-btn">
+      View Watch Later
+    </button> 
+
+<div id="watch-later-list" style="display:none; margin-top: 30px;">
+  <h2>Watch Later List</h2>
+  <div id="watch-later-grid" ></div>
+</div>
+</div>
+  <script>
+ const viewWatchLaterBtn = document.getElementById("view-watch-later-btn");
+ const watchLaterListDiv = document.getElementById("watch-later-list");
+ const watchLaterGrid = document.getElementById("watch-later-grid");
+
+viewWatchLaterBtn.addEventListener("click", async () => {
+  // Toggle visibility
+  if (watchLaterListDiv.style.display === "none") {
+    watchLaterListDiv.style.display = "block";
+    viewWatchLaterBtn.textContent = "Hide Watch Later";
+
+    const watchLaterTitles = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+    if (watchLaterTitles.length === 0) {
+      watchLaterGrid.innerHTML = "<p>No anime saved in Watch Later.</p>";
+      return;
+    }
+
+    watchLaterGrid.innerHTML = "<p>Loading saved anime...</p>";
+
+    // Fetch and render watch later anime details (using Kitsu + Jikan)
+    const results = await Promise.all(
+      watchLaterTitles.map(async (title) => {
+        try {
+          const kitsuRes = await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${encodeURIComponent(title)}`);
+          const kitsuData = await kitsuRes.json();
+          const anime = kitsuData.data?.[0]?.attributes;
+          const image = anime?.posterImage?.medium || "";
+          const cleanDesc = (anime?.synopsis || "No description").replace(/\s+/g, " ").split(".")[0] + ".";
+
+          const jikanRes = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`);
+          const jikanData = await jikanRes.json();
+          const trailer = jikanData.data?.[0]?.trailer?.url || `https://www.youtube.com/results?search_query=${encodeURIComponent(title + " anime trailer")}`;
+
+          return { title, image, description: cleanDesc, episodeCount: anime?.episodeCount || "N/A" ,trailer };
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    watchLaterGrid.innerHTML = "";
+
+    results.forEach(anime => {
+      if (!anime) return;
+      const card = document.createElement("div");
+      card.className = "anime-card";
+      card.style.width = "200px";
+      card.style.border = "1px solid #ccc";
+      card.style.padding = "10px";
+      card.style.borderRadius = "8px";
+      card.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.alignItems = "center";
+
+      card.innerHTML = `
+        <img src="${anime.image}" alt="${anime.title}" style="width: 100%; border-radius: 6px;">
+        <h4 style="margin: 10px 0 6px;">${anime.title}</h4>
+        <p style="font-size: 14px; flex-grow: 1;">${anime.description}</p>
+        <p><strong>Episodes:</strong> ${anime.episodeCount || "N/A"}</p>
+        <a href="${anime.trailer}" target="_blank" style="margin-bottom: 8px;">🎬 Watch Trailer</a>
+      `;
+
+      // Remove button
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.style.padding = "6px 10px";
+      removeBtn.style.cursor = "pointer";
+      removeBtn.style.backgroundColor = "#e74c3c";
+      removeBtn.style.color = "white";
+      removeBtn.style.border = "none";
+      removeBtn.style.borderRadius = "4px";
+
+      removeBtn.addEventListener("click", () => {
+        let saved = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+        saved = saved.filter(t => t !== anime.title);
+        localStorage.setItem("watchLaterList", JSON.stringify(saved));
+        card.remove();
+
+        // If no more saved anime, show message
+        if (saved.length === 0) {
+          watchLaterGrid.innerHTML = "<p>No anime saved in Watch Later.</p>";
+        }
+      });
+
+      card.appendChild(removeBtn);
+
+      watchLaterGrid.appendChild(card);
+    });
+  } else {
+    watchLaterListDiv.style.display = "none";
+    viewWatchLaterBtn.textContent = "View Watch Later";
+  }
+});
+
+</script>
+
+  <script>
+    function selectTheme(mood) {
+      localStorage.setItem("selectedTheme", mood);
+      window.location.href = "result.html";
+    }
+  </script>
+</body>
+</html>
