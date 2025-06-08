@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Chooser</title>
+  <link rel="stylesheet" href="result.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button id="back-home"> Back</button>
+  <div class="container">
+    <h1>Anime for your mood: <span id="theme-name"></span></h1>
+    <div id="anime-list" class="anime-grid"></div>
+  </div>
+<script>
+    // Back button functionality
+    document.getElementById("back-home").addEventListener("click", () => {
+      window.location.href = "index.html"; 
+    });
+</script>
+  <script src="result.js"></script>
+</body>
+</html>

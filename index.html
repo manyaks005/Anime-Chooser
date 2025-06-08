@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Chooser</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1>🎬 Pick Your Favorite Anime Theme</h1>
+      <p>Choose a theme to get the perfect anime match</p>
+      <div class="mood-grid">
+        <div class="card Adventure" onclick="selectTheme('Adventure')">
+          <span>🌍</span>
+          <p>Adventure</p>
+        </div>
+        <div class="card Fantasy" onclick="selectTheme('Fantasy')">
+          <span>🧙‍♂️</span>
+          <p>Fantasy</p>
+        </div>
+        <div class="card Action" onclick="selectTheme('Action')">
+          <span>💥</span>
+          <p>Action</p>
+        </div>
+        <div class="card Music" onclick="selectTheme('Music')">
+          <span>🎵</span>
+          <p>Music</p>
+        </div>
+        <div class="card Romance" onclick="selectTheme('Romance')">
+          <span>❤️</span>
+          <p>Romance</p>
+        </div>
+        <div class="card Sports" onclick="selectTheme('Sports')">
+          <span>🏀</span>
+          <p>Sports</p>
+        </div>
+        <div class="card Comedy" onclick="selectTheme('Comedy')">
+          <span>😂</span>
+          <p>Comedy</p>
+        </div>
+        <div class="card Mystery" onclick="selectTheme('Mystery')">
+          <span>🕵️‍♂️</span>
+          <p>Mystery</p>
+        </div>
+        <div class="card Sci-Fi" onclick="selectTheme('Sci-Fi')">
+          <span>🚀</span>
+          <p>Sci-Fi</p>
+      </div>
+    </div><br><br>
+    <button id="view-watch-later-btn"  onclick="window.location.href='watchlater.html'">View Watch Later</button>
+
+
+
+  
+  <script>
+    function selectTheme(mood) {
+      localStorage.setItem("selectedTheme", mood);
+      window.location.href = "result.html";
+    }
+  </script>
+</body>
+</html>

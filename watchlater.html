@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Watch Later List</title>
+  <link rel="stylesheet" href="watchlater.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎥 Your Watch Later List</h1>
+    <div id="watch-later-grid"></div>
+    <br>
+    <button id="back-home"onclick="window.location.href='index.html'">⬅ Back</button>
+  </div>
+
+  <script>
+    const watchLaterGrid = document.getElementById("watch-later-grid");
+
+    async function loadWatchLater() {
+      const watchLaterTitles = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+      if (watchLaterTitles.length === 0) {
+        watchLaterGrid.innerHTML = "<p>No anime saved in Watch Later.</p>";
+        return;
+      }
+
+      watchLaterGrid.innerHTML = "<p>Loading saved anime...</p>";
+
+      const results = await Promise.all(
+        watchLaterTitles.map(async (title) => {
+          try {
+            const kitsuRes = await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${encodeURIComponent(title)}`);
+            const kitsuData = await kitsuRes.json();
+            const anime = kitsuData.data?.[0]?.attributes;
+            const image = anime?.posterImage?.medium || "";
+            const cleanDesc = (anime?.synopsis || "No description").replace(/\s+/g, " ").split(".")[0] + ".";
+
+            const jikanRes = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`);
+            const jikanData = await jikanRes.json();
+            const trailer = jikanData.data?.[0]?.trailer?.url || `https://www.youtube.com/results?search_query=${encodeURIComponent(title + " anime trailer")}`;
+
+            return { title, image, description: cleanDesc, episodeCount: anime?.episodeCount || "N/A", trailer };
+          } catch {
+            return null;
+          }
+        })
+      );
+
+      watchLaterGrid.innerHTML = "";
+
+      results.forEach(anime => {
+        if (!anime) return;
+        const card = document.createElement("div");
+        card.className = "anime-card";
+
+        card.innerHTML = `
+          <img src="${anime.image}" alt="${anime.title}" style="width: 100%; border-radius: 6px;">
+          <h4 style="margin: 10px 0 6px;">${anime.title}</h4>
+          <p style="font-size: 14px; flex-grow: 1;">${anime.description}</p>
+          <p><strong>Episodes:</strong> ${anime.episodeCount}</p>
+          <a href="${anime.trailer}" target="_blank">🎬 Watch Trailer</a>
+          <br><br>
+          <button id="remove-btn" onclick="removeAnime('${anime.title}', this)">Remove</button>
+        `;
+
+        watchLaterGrid.appendChild(card);
+      });
+    }
+
+    function removeAnime(title, btn) {
+      let saved = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+      saved = saved.filter(t => t !== title);
+      localStorage.setItem("watchLaterList", JSON.stringify(saved));
+      btn.parentElement.remove();
+      if (saved.length === 0) {
+        watchLaterGrid.innerHTML = "<p>No anime saved in Watch Later.</p>";
+      }
+    }
+
+    loadWatchLater();
+  </script>
+</body>
+</html>
