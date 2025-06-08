@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(-45deg,#bdd9cd, #8eaebb, #386994,  #214457,#051827);
+  background: linear-gradient(-45deg, #bdd9cd, #8eaebb, #386994, #214457, #051827);
   background-size: 400% 400%;
   animation: gradientShift 20s ease infinite;
   min-height: 100vh;
@@ -62,7 +62,6 @@ h1 {
   cursor: pointer;
   color: #fff;
   backdrop-filter: blur(10px);
-  border: 1px solid #ffffff33;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -78,101 +77,128 @@ h1 {
 
 .card:hover {
   transform: translateY(-6px) scale(1.05);
-  box-shadow: 0 0 20px #ffffff4d;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
-#view-watch-later-btn{
-  margin-bottom: 20px;
-   padding: 18px 35px; 
-    color: #ffffff;
-   cursor: pointer;
-   border-radius: 18px;
-   font-size: 16px;
-  background-color:#ffffff33;
+
+#view-watch-later-btn {
+  margin-bottom: 10px;
+  padding: 18px 35px;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 18px;
+  font-size: 16px;
+  background-color: #ffffff33;
 }
-.watch-later-grid{
+
+.watch-later-grid {
   background-color: rgba(255, 255, 255, 0.342);
 }
-#watch-later-grid{
+
+#watch-later-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-   flex-wrap: wrap;
-   gap: 10px;
+  gap: 10px;
 }
+
+/* =================== Media Queries =================== */
+
+/* Small phones (320px–360px) */
+@media (max-width: 360px) {
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .container p {
+    font-size: 0.8rem;
+  }
+  .mood-grid {
+   grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+  padding: 8px 4px;
+  font-size: 0.85rem;
+ }
+.card span {
+  font-size: 1.5rem;
+ }
+}
+
+/* Most smartphones (375px–425px) */
+@media (min-width: 375px) and (max-width: 425px) {
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 26px;
+    margin-top: 12px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  .container p {
+    font-size: 0.8rem;
+  }
+
+  .mood-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+ .card {
+  padding: 8px 4px;
+  font-size: 0.85rem;
+}
+.card span {
+  font-size: 1.5rem;
+}
+}
+
+/* Larger phones/phablets (426px–600px) */
 @media (min-width: 426px) and (max-width: 600px) {
+  body {
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+  }
+
   h1 {
     font-size: 1.8rem;
   }
 
-  .mood-grid{
-     display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 800px;
-      margin: auto;
+  .container {
+    padding: 14px;
   }
-.overlay {
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0);
-  padding: 0px;
-  border-radius: 20px;
-  box-shadow: 0 0 0px rgba(0, 0, 0, 0.6);
-}
-.container{
-  padding: 14px;
-}
-body{
-   background: linear-gradient(135deg, #1e1e2f, #2c3e50);
-}
 
   .container p {
     font-size: 1rem;
   }
 
-}
+  .overlay {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
 
-@media (max-width: 360px) {
-  body{
-   background: linear-gradient(135deg, #1e1e2f, #2c3e50);
-}
-h1{
-  font-size: 1.2rem;
-}
-  .container{
-    margin-top:15px;
-  }
-  .mood-grid{
-    display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-      margin: auto;
-     
-  }
-  .card {
-     padding: 2px 2px;
-      
-  }
-}
-@media (min-width: 375px) and (max-width: 425px) {
-  body{
-   background: linear-gradient(135deg, #1e1e2f, #2c3e50);
-}
-  .container{
-    margin-top:8px;
-  }
-   .container h1 {
-    font-size: 2.5rem;
-    .container p{
-      font-size: 1.1rem;
-    }
-  }
-  .mood-grid{
-    display: grid;
+  .mood-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: auto; 
-    max-width: 100vh;
+    gap: 16px;
+  }
+
+  .card {
+    padding: 15px 10px;
   }
 }
- 
-
