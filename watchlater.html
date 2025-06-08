@@ -58,7 +58,7 @@
           <h4 style="margin: 10px 0 6px;">${anime.title}</h4>
           <p style="font-size: 14px; flex-grow: 1;">${anime.description}</p>
           <p><strong>Episodes:</strong> ${anime.episodeCount}</p>
-          <a href="${anime.trailer}" target="_blank">🎬 Watch Trailer</a>
+          <a class="trailer-button" href="${anime.trailer}" target="_blank">🎬 Watch Trailer</a>
           <br><br>
           <button id="remove-btn" onclick="removeAnime('${anime.title}', this)">Remove</button>
         `;
