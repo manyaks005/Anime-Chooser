@@ -56,21 +56,15 @@ h1 {
 .card {
   background: #ffffff1a;
   border-radius: 15px;
-<<<<<<< HEAD
   padding: 4px 10px;
-=======
   padding: 25px 10px;
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
   color: #fff;
   backdrop-filter: blur(10px);
-<<<<<<< HEAD
   border: 1px solid #ffffff33;
-=======
   border: 1px solid rgba(255, 255, 255, 0.2);
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
 }
 
 .card span {
@@ -85,18 +79,15 @@ h1 {
 
 .card:hover {
   transform: translateY(-6px) scale(1.05);
-<<<<<<< HEAD
   box-shadow: 0 0 20px #ffffff4d;
-=======
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
 }
 
 @media (max-width: 600px) {
   h1 {
     font-size: 1.8rem;
   }
-<<<<<<< HEAD
+
   .mood-grid{
      display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -117,11 +108,11 @@ h1 {
 body{
    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
 }
-=======
+
   .container p {
     font-size: 1rem;
   }
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
+
 }
 #view-watch-later-btn{
   margin-bottom: 20px;
@@ -130,22 +121,16 @@ body{
    cursor: pointer;
    border-radius: 18px;
    font-size: 16px;
-<<<<<<< HEAD
   background-color:#ffffff33;
 }
 .watch-later-grid{
-=======
   background-color: rgba(255, 255, 255, 0.342);
 }
 #watch-later-grid{
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
   display: grid;
   grid-template-columns: repeat(3, 1fr);
    flex-wrap: wrap;
    gap: 10px;
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> 461b3701d131e4179cbd9a4b712906ea55be7134
+
