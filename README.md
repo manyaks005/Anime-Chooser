@@ -8,7 +8,6 @@ A modern, user-friendly web application that enables anime enthusiasts to discov
 ## Table of Contents
 
 - [Features](#features)  
-- [Demo](#demo)  
 - [APIs Used](#apis-used)  
 - [Usage](#usage)  
 - [Technologies Used](#technologies-used)  
@@ -27,12 +26,6 @@ A modern, user-friendly web application that enables anime enthusiasts to discov
   - Poster  
   - Short Introduction  
   - Episode Count  
-
----
-
-## Demo
-
-> [Live Demo Link]() 
 
 ---
 
